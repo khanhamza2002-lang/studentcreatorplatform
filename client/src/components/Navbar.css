@@ -1,55 +1,72 @@
-.navbar {
-  background-color: #1e3a8a;
-  color: white;
+.navbar{
+    height:75px;
+    background:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+    padding:0 70px;
 
-  padding: 16px 40px;
+    box-shadow:0 3px 12px rgba(0,0,0,.06);
+
+    position:sticky;
+    top:0;
+    z-index:100;
 }
 
-.logo {
-  font-size: 24px;
-  font-weight: bold;
+.logo{
+    font-size:24px;
+    font-weight:700;
+    color:#1E3A8A;
 }
 
-.nav-links {
-  display: flex;
-  list-style: none;
-  gap: 30px;
-  margin: 0;
-  padding: 0;
+.nav-links{
+    display:flex;
+    gap:35px;
+    list-style:none;
 }
 
-.nav-links li {
-  cursor: pointer;
-  transition: 0.3s;
+.nav-links a{
+    color:#374151;
+    font-weight:500;
+    transition:.25s;
 }
 
-.nav-links li:hover {
-  color: #dbeafe;
+.nav-links a:hover{
+    color:#2563EB;
 }
 
-.auth-buttons {
-  display: flex;
-  gap: 10px;
-}
-
-.auth-buttons button {
-  border: none;
-  padding: 10px 18px;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 15px;
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .login-btn {
-  background: white;
-  color: #1e3a8a;
+    color: #1E3A8A;
+    font-weight: 600;
+    padding: 10px 18px;
+    border: 2px solid #1E3A8A;
+    border-radius: 8px;
+    transition: .3s;
 }
 
-.register-btn {
-  background: #2563eb;
-  color: white;
+.login-btn:hover {
+    background: #1E3A8A;
+    color: white;
+}
+
+.register-btn,
+.profile-btn {
+    background: #1E3A8A;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.register-btn:hover,
+.profile-btn:hover {
+    background: #2563EB;
 }

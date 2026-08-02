@@ -8,6 +8,8 @@ import ProductDetails from "./pages/ProductDetails";
 import Profile from "./pages/Profile";
 import Messages from "./pages/Messages";
 import Admin from "./pages/Admin";
+import Dashboard from "./pages/Dashboard";
+import UploadProduct from "./pages/UploadProduct";
 
 function App() {
   return (
@@ -21,6 +23,8 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/messages" element={<Messages />} />
         <Route path="/admin" element={<Admin />} />
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/upload" element={<UploadProduct />} />
       </Routes>
     </BrowserRouter>
   );
