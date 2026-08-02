@@ -1,6 +1,49 @@
+import { useState } from "react";
 import "./Register.css";
 
 function Register() {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const handleRegister = async () => {
+    if (password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+
+    try {
+      const response = await fetch("http://localhost:5000/api/auth/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          full_name: fullName,
+          email: email,
+          password: password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        alert("Registration Successful!");
+
+        setFullName("");
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Server Error");
+    }
+  };
+
   return (
     <div className="register-container">
       <div className="register-card">
@@ -8,15 +51,37 @@ function Register() {
 
         <p>Join the Student Creator Platform.</p>
 
-        <input type="text" placeholder="Full Name" />
+        <input
+          type="text"
+          placeholder="Full Name"
+          value={fullName}
+          onChange={(e) => setFullName(e.target.value)}
+        />
 
-        <input type="email" placeholder="Email Address" />
+        <input
+          type="email"
+          placeholder="Email Address"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-        <input type="password" placeholder="Password" />
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
 
-        <input type="password" placeholder="Confirm Password" />
+        <input
+          type="password"
+          placeholder="Confirm Password"
+          value={confirmPassword}
+          onChange={(e) => setConfirmPassword(e.target.value)}
+        />
 
-        <button>Create Account</button>
+        <button onClick={handleRegister}>
+          Create Account
+        </button>
 
         <span>
           Already have an account? Login
