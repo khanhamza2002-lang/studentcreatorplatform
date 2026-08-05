@@ -1,29 +1,73 @@
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import "./Hero.css";
 
 function Hero() {
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
+
+  const handleSearch = () => {
+    navigate(`/products?search=${encodeURIComponent(search)}`);
+  };
+
   return (
     <section className="hero">
+      <div className="hero-overlay">
 
-      <div className="hero-content">
+        <div className="hero-content">
 
-        <h1>Buy & Sell Student Creations</h1>
+          <span className="hero-badge">
+            🎓 TMUC Exclusive Marketplace
+          </span>
 
-        <p>
-          The exclusive marketplace for TMUC students to buy and sell
-          digital and physical products.
-        </p>
+          <h1>
+            Buy, Sell & Showcase
+            <br />
+            Student Creations
+          </h1>
 
-        <div className="search-box">
-          <input
-            type="text"
-            placeholder="Search for notes, clothing, software..."
-          />
+          <p>
+            Discover notes, software, fashion, artwork,
+            electronics and much more — all created by
+            talented TMUC students.
+          </p>
 
-          <button>Search</button>
+          <div className="hero-search">
+
+            <input
+              type="text"
+              placeholder="Search notes, software, clothing..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+
+            <button onClick={handleSearch}>
+              Search
+            </button>
+
+          </div>
+
+          <div className="hero-buttons">
+
+            <button
+              className="primary-btn"
+              onClick={() => navigate("/products")}
+            >
+              Explore Marketplace
+            </button>
+
+            <button
+              className="secondary-btn"
+              onClick={() => navigate("/register")}
+            >
+              Become a Seller
+            </button>
+
+          </div>
+
         </div>
 
       </div>
-
     </section>
   );
 }

@@ -10,6 +10,10 @@ import Messages from "./pages/Messages";
 import Admin from "./pages/Admin";
 import Dashboard from "./pages/Dashboard";
 import UploadProduct from "./pages/UploadProduct";
+import ProtectedRoute from "./components/ProtectedRoute";
+import Wishlist from "./pages/Wishlist";
+import EditProduct from "./pages/EditProduct";
+import MyOrders from "./pages/MyOrders";
 
 function App() {
   return (
@@ -21,10 +25,37 @@ function App() {
         <Route path="/products" element={<Products />} />
         <Route path="/product/:id" element={<ProductDetails />} />
         <Route path="/profile" element={<Profile />} />
-        <Route path="/messages" element={<Messages />} />
+        <Route path="/messages/:sellerId?" element={<Messages />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/upload" element={<UploadProduct />} />
+        <Route path="/wishlist" element={<Wishlist />} />
+        <Route
+  path="/my-orders"
+  element={
+    <ProtectedRoute>
+      <MyOrders />
+    </ProtectedRoute>
+  }
+/>
+        <Route
+  path="/edit-product/:id"
+  element={<EditProduct />}
+/>
+        <Route
+  path="/dashboard"
+  element={
+    <ProtectedRoute>
+      <Dashboard />
+    </ProtectedRoute>
+  }
+/>
+       <Route
+  path="/upload-product"
+  element={
+    <ProtectedRoute>
+      <UploadProduct />
+    </ProtectedRoute>
+  }
+/>
       </Routes>
     </BrowserRouter>
   );
