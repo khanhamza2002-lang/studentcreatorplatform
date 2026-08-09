@@ -14,126 +14,171 @@ function Admin() {
     loadProducts();
   }, []);
 
+  // Load admin statistics
   const loadStats = async () => {
-    const res = await fetch("https://extraordinary-embrace-production-5820.up.railway.app/api/admin/stats", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    try {
+      const res = await fetch(
+        "https://extraordinary-embrace-production-5820.up.railway.app/api/admin/stats",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (data.success) {
-      setStats(data.stats);
+      if (data.success) {
+        setStats(data.stats);
+      }
+    } catch (error) {
+      console.error("Failed to load stats:", error);
     }
   };
 
+  // Load users
   const loadUsers = async () => {
-    const res = await fetch("https://extraordinary-embrace-production-5820.up.railway.app/api/admin/users", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    try {
+      const res = await fetch(
+        "https://extraordinary-embrace-production-5820.up.railway.app/api/admin/users",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (data.success) {
-      setUsers(data.users);
+      if (data.success) {
+        setUsers(data.users);
+      }
+    } catch (error) {
+      console.error("Failed to load users:", error);
     }
   };
 
+  // Load products
   const loadProducts = async () => {
-    const res = await fetch("https://extraordinary-embrace-production-5820.up.railway.app/api/admin/products", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    try {
+      const res = await fetch(
+        "https://extraordinary-embrace-production-5820.up.railway.app/api/admin/products",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    const data = await res.json();
+      const data = await res.json();
 
-    if (data.success) {
-      setProducts(data.products);
+      if (data.success) {
+        setProducts(data.products);
+      }
+    } catch (error) {
+      console.error("Failed to load products:", error);
     }
   };
 
+  // Delete product
   const deleteProduct = async (id) => {
     if (!window.confirm("Delete this product?")) return;
 
-    const res = await fetch(
-      `https://extraordinary-embrace-production-5820.up.railway.app/api/admin/products/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    const approveProduct = async (id) => {
-  try {
-    const res = await fetch(
-      `https://extraordinary-embrace-production-5820.up.railway.app/api/admin/products/${id}/approve`,
-      {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    const data = await res.json();
-
-    if (data.success) {
-      setProducts((prev) =>
-        prev.map((product) =>
-          product.id === id
-            ? { ...product, approved: true }
-            : product
-        )
+    try {
+      const res = await fetch(
+        `https://extraordinary-embrace-production-5820.up.railway.app/api/admin/products/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
 
-      alert("Product approved successfully");
-    } else {
-      alert(data.message || "Failed to approve product");
-    }
-  } catch (error) {
-    console.error(error);
-    alert("Server error");
-  }
-};
+      const data = await res.json();
 
-    const data = await res.json();
+      if (data.success) {
+        alert("Product deleted.");
 
-    if (data.success) {
-      alert("Product deleted.");
-      loadProducts();
-      loadStats();
-    } else {
-      alert(data.message);
+        setProducts((prev) =>
+          prev.filter((product) => product.id !== id)
+        );
+
+        loadStats();
+      } else {
+        alert(data.message || "Failed to delete product.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Server error");
     }
   };
 
+  // Approve product
+  const approveProduct = async (id) => {
+    try {
+      const res = await fetch(
+        `https://extraordinary-embrace-production-5820.up.railway.app/api/admin/products/${id}/approve`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+        setProducts((prev) =>
+          prev.map((product) =>
+            product.id === id
+              ? { ...product, approved: true }
+              : product
+          )
+        );
+
+        alert("Product approved successfully.");
+      } else {
+        alert(data.message || "Failed to approve product.");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Server error");
+    }
+  };
+
+  // Delete user
   const deleteUser = async (id) => {
     if (!window.confirm("Delete this user?")) return;
 
-    const res = await fetch(
-      `https://extraordinary-embrace-production-5820.up.railway.app/api/admin/users/${id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+    try {
+      const res = await fetch(
+        `https://extraordinary-embrace-production-5820.up.railway.app/api/admin/users/${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      const data = await res.json();
+
+      if (data.success) {
+        alert("User deleted.");
+
+        setUsers((prev) =>
+          prev.filter((user) => user.id !== id)
+        );
+
+        loadStats();
+      } else {
+        alert(data.message || "Failed to delete user.");
       }
-    );
-
-    const data = await res.json();
-
-    if (data.success) {
-      alert("User deleted.");
-      loadUsers();
-      loadStats();
-    } else {
-      alert(data.message);
+    } catch (error) {
+      console.error(error);
+      alert("Server error");
     }
   };
 
@@ -161,6 +206,7 @@ function Admin() {
       >
         <h1>Admin Dashboard</h1>
 
+        {/* Statistics */}
         <div
           style={{
             display: "flex",
@@ -208,6 +254,7 @@ function Admin() {
           </div>
         </div>
 
+        {/* Users */}
         <h2>Users</h2>
 
         <table
@@ -234,6 +281,7 @@ function Admin() {
                 <td>{user.full_name}</td>
                 <td>{user.email}</td>
                 <td>{user.role}</td>
+
                 <td>
                   <button
                     onClick={() => deleteUser(user.id)}
@@ -254,6 +302,7 @@ function Admin() {
           </tbody>
         </table>
 
+        {/* Products */}
         <h2>Products</h2>
 
         <table
@@ -268,6 +317,7 @@ function Admin() {
               <th>Title</th>
               <th>Seller</th>
               <th>Price</th>
+              <th>Status</th>
               <th>Action</th>
             </tr>
           </thead>
@@ -280,23 +330,28 @@ function Admin() {
                 <td>{product.full_name}</td>
                 <td>PKR {product.price}</td>
 
-                {!product.approved && (
-  <button
-    onClick={() => approveProduct(product.id)}
-    style={{
-      background: "#16a34a",
-      color: "white",
-      border: "none",
-      padding: "8px 14px",
-      borderRadius: "6px",
-      cursor: "pointer",
-      marginRight: "8px",
-    }}
-  >
-    Approve
-  </button>
-)}
                 <td>
+                  {product.approved ? "Approved" : "Pending"}
+                </td>
+
+                <td>
+                  {!product.approved && (
+                    <button
+                      onClick={() => approveProduct(product.id)}
+                      style={{
+                        background: "#16a34a",
+                        color: "white",
+                        border: "none",
+                        padding: "8px 14px",
+                        borderRadius: "6px",
+                        cursor: "pointer",
+                        marginRight: "8px",
+                      }}
+                    >
+                      Approve
+                    </button>
+                  )}
+
                   <button
                     onClick={() => deleteProduct(product.id)}
                     style={{
