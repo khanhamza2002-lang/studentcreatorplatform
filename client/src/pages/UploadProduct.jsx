@@ -29,7 +29,7 @@ function UploadProduct() {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/products", {
+      const response = await fetch("https://extraordinary-embrace-production-5820.up.railway.app/api/products", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

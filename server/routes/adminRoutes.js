@@ -10,6 +10,7 @@ const {
   getProductsAdmin,
   deleteProduct,
   deleteUser,
+  approveProduct,
 } = require("../controllers/adminController");
 
 router.get(
@@ -31,6 +32,13 @@ router.get(
   authMiddleware,
   adminMiddleware,
   getProductsAdmin
+);
+
+router.put(
+  "/products/:id/approve",
+  authMiddleware,
+  adminMiddleware,
+  approveProduct
 );
 
 router.delete(

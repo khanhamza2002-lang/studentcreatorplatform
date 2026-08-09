@@ -12,7 +12,7 @@ function Wishlist() {
   const fetchWishlist = async () => {
     const token = localStorage.getItem("token");
 
-    const res = await fetch("http://localhost:5000/api/wishlist", {
+    const res = await fetch("https://extraordinary-embrace-production-5820.up.railway.app/api/wishlist", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -28,7 +28,7 @@ function Wishlist() {
   const removeWishlist = async (id) => {
     const token = localStorage.getItem("token");
 
-    await fetch(`http://localhost:5000/api/wishlist/${id}`, {
+    await fetch(`https://extraordinary-embrace-production-5820.up.railway.app/api/wishlist/${id}`, {
       method: "DELETE",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -73,7 +73,7 @@ function Wishlist() {
                 <img
                   src={
                     product.image_url
-                      ? `http://localhost:5000${product.image_url}`
+                      ? `https://extraordinary-embrace-production-5820.up.railway.app${product.image_url}`
                       : "https://placehold.co/400x250"
                   }
                   alt={product.title}

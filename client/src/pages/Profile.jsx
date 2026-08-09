@@ -17,7 +17,7 @@ function Profile() {
 
   const fetchProducts = async () => {
     const res = await fetch(
-      "http://localhost:5000/api/products/my-products",
+      "https://extraordinary-embrace-production-5820.up.railway.app/api/products/my-products",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -34,7 +34,7 @@ function Profile() {
 
   const fetchSales = async () => {
     const res = await fetch(
-      "http://localhost:5000/api/orders/my-sales",
+      "https://extraordinary-embrace-production-5820.up.railway.app/api/orders/my-sales",
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -51,7 +51,7 @@ function Profile() {
 
   const fetchWishlist = async () => {
     const res = await fetch(
-      "http://localhost:5000/api/wishlist",
+      "https://extraordinary-embrace-production-5820.up.railway.app/api/wishlist",
       {
         headers: {
           Authorization: `Bearer ${token}`,

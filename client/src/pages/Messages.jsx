@@ -22,7 +22,7 @@ function Messages() {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/messages/${receiverId}`,
+        `https://extraordinary-embrace-production-5820.up.railway.app/api/messages/${receiverId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -61,7 +61,7 @@ function Messages() {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/messages",
+        "https://extraordinary-embrace-production-5820.up.railway.app/api/messages",
         {
           method: "POST",
           headers: {

@@ -13,7 +13,7 @@ function MyOrders() {
 
     try {
       const res = await fetch(
-        "http://localhost:5000/api/orders/my-orders",
+        "https://extraordinary-embrace-production-5820.up.railway.app/api/orders/my-orders",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -62,7 +62,7 @@ function MyOrders() {
               <img
                 src={
                   order.image_url
-                    ? `http://localhost:5000${order.image_url}`
+                    ? `https://extraordinary-embrace-production-5820.up.railway.app${order.image_url}`
                     : "https://placehold.co/150"
                 }
                 alt={order.title}

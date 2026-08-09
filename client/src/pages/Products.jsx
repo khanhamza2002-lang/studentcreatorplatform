@@ -14,7 +14,7 @@ const [loading, setLoading] = useState(true);
 
   try {
       const response = await fetch(
-        `http://localhost:5000/api/products/search?search=${search}&category=${category}`
+        `https://extraordinary-embrace-production-5820.up.railway.app/api/products/search?search=${search}&category=${category}`
       );
 
       const data = await response.json();

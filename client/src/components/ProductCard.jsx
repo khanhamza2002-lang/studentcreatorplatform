@@ -18,7 +18,7 @@ function ProductCard({
         <img
           src={
             image
-              ? `http://localhost:5000${image}`
+              ? `https://extraordinary-embrace-production-5820.up.railway.app${image}`
               : "https://placehold.co/600x400"
           }
           alt={title}

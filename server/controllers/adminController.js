@@ -121,10 +121,45 @@ const deleteUser = async (req, res) => {
   }
 };
 
+const approveProduct = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const result = await pool.query(
+      `UPDATE products
+       SET approved = TRUE
+       WHERE id = $1
+       RETURNING *`,
+      [id]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+
+    res.json({
+      success: true,
+      message: "Product approved successfully",
+      product: result.rows[0],
+    });
+  } catch (err) {
+    console.error(err);
+
+    res.status(500).json({
+      success: false,
+      message: "Server Error",
+    });
+  }
+};
+
 module.exports = {
   getStats,
   getUsers,
   getProductsAdmin,
   deleteProduct,
   deleteUser,
+  approveProduct,
 };

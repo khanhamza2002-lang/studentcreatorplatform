@@ -20,7 +20,7 @@ function EditProduct() {
   const loadProduct = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/products/${id}`
+        `https://extraordinary-embrace-production-5820.up.railway.app/api/products/${id}`
       );
 
       const data = await res.json();
@@ -39,7 +39,7 @@ function EditProduct() {
   const updateProduct = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/products/${id}`,
+        `https://extraordinary-embrace-production-5820.up.railway.app/api/products/${id}`,
         {
           method: "PUT",
           headers: {

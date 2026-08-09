@@ -15,7 +15,7 @@ function Admin() {
   }, []);
 
   const loadStats = async () => {
-    const res = await fetch("http://localhost:5000/api/admin/stats", {
+    const res = await fetch("https://extraordinary-embrace-production-5820.up.railway.app/api/admin/stats", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -29,7 +29,7 @@ function Admin() {
   };
 
   const loadUsers = async () => {
-    const res = await fetch("http://localhost:5000/api/admin/users", {
+    const res = await fetch("https://extraordinary-embrace-production-5820.up.railway.app/api/admin/users", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -43,7 +43,7 @@ function Admin() {
   };
 
   const loadProducts = async () => {
-    const res = await fetch("http://localhost:5000/api/admin/products", {
+    const res = await fetch("https://extraordinary-embrace-production-5820.up.railway.app/api/admin/products", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -60,7 +60,7 @@ function Admin() {
     if (!window.confirm("Delete this product?")) return;
 
     const res = await fetch(
-      `http://localhost:5000/api/admin/products/${id}`,
+      `https://extraordinary-embrace-production-5820.up.railway.app/api/admin/products/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -68,6 +68,39 @@ function Admin() {
         },
       }
     );
+
+    const approveProduct = async (id) => {
+  try {
+    const res = await fetch(
+      `https://extraordinary-embrace-production-5820.up.railway.app/api/admin/products/${id}/approve`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    const data = await res.json();
+
+    if (data.success) {
+      setProducts((prev) =>
+        prev.map((product) =>
+          product.id === id
+            ? { ...product, approved: true }
+            : product
+        )
+      );
+
+      alert("Product approved successfully");
+    } else {
+      alert(data.message || "Failed to approve product");
+    }
+  } catch (error) {
+    console.error(error);
+    alert("Server error");
+  }
+};
 
     const data = await res.json();
 
@@ -84,7 +117,7 @@ function Admin() {
     if (!window.confirm("Delete this user?")) return;
 
     const res = await fetch(
-      `http://localhost:5000/api/admin/users/${id}`,
+      `https://extraordinary-embrace-production-5820.up.railway.app/api/admin/users/${id}`,
       {
         method: "DELETE",
         headers: {
@@ -246,6 +279,23 @@ function Admin() {
                 <td>{product.title}</td>
                 <td>{product.full_name}</td>
                 <td>PKR {product.price}</td>
+
+                {!product.approved && (
+  <button
+    onClick={() => approveProduct(product.id)}
+    style={{
+      background: "#16a34a",
+      color: "white",
+      border: "none",
+      padding: "8px 14px",
+      borderRadius: "6px",
+      cursor: "pointer",
+      marginRight: "8px",
+    }}
+  >
+    Approve
+  </button>
+)}
                 <td>
                   <button
                     onClick={() => deleteProduct(product.id)}

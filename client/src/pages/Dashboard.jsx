@@ -17,7 +17,7 @@ function Dashboard() {
   const fetchProducts = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/products/my-products",
+        "https://extraordinary-embrace-production-5820.up.railway.app/api/products/my-products",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -38,7 +38,7 @@ function Dashboard() {
   const fetchSales = async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/orders/my-sales",
+        "https://extraordinary-embrace-production-5820.up.railway.app/api/orders/my-sales",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -177,7 +177,7 @@ function Dashboard() {
                   <img
                     src={
                       product.image_url
-                        ? `http://localhost:5000${product.image_url}`
+                        ? `https://extraordinary-embrace-production-5820.up.railway.app${product.image_url}`
                         : "https://placehold.co/600x400"
                     }
                     alt={product.title}
@@ -279,7 +279,7 @@ function Dashboard() {
             <img
               src={
                 sale.image_url
-                  ? `http://localhost:5000${sale.image_url}`
+                  ? `https://extraordinary-embrace-production-5820.up.railway.app${sale.image_url}`
                   : "https://placehold.co/120"
               }
               alt={sale.title}

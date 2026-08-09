@@ -21,7 +21,7 @@ function ProductDetails() {
   const fetchProduct = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/products/${id}`
+        `https://extraordinary-embrace-production-5820.up.railway.app/api/products/${id}`
       );
 
       const data = await res.json();
@@ -37,7 +37,7 @@ function ProductDetails() {
   const fetchReviews = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/reviews/${id}`
+        `https://extraordinary-embrace-production-5820.up.railway.app/api/reviews/${id}`
       );
 
       const data = await res.json();
@@ -53,7 +53,7 @@ function ProductDetails() {
   const fetchAverage = async () => {
     try {
       const res = await fetch(
-        `http://localhost:5000/api/reviews/rating/${id}`
+        `https://extraordinary-embrace-production-5820.up.railway.app/api/reviews/rating/${id}`
       );
 
       const data = await res.json();
@@ -76,7 +76,7 @@ function ProductDetails() {
 
     try {
       const res = await fetch(
-        "http://localhost:5000/api/orders",
+        "https://extraordinary-embrace-production-5820.up.railway.app/api/orders",
         {
           method: "POST",
           headers: {
@@ -111,7 +111,7 @@ function ProductDetails() {
     }
 
     const res = await fetch(
-      "http://localhost:5000/api/wishlist",
+      "https://extraordinary-embrace-production-5820.up.railway.app/api/wishlist",
       {
         method: "POST",
         headers: {
@@ -142,7 +142,7 @@ function ProductDetails() {
     }
 
     const res = await fetch(
-      "http://localhost:5000/api/reviews",
+      "https://extraordinary-embrace-production-5820.up.railway.app/api/reviews",
       {
         method: "POST",
         headers: {
@@ -194,7 +194,7 @@ function ProductDetails() {
     <img
       src={
         product.image_url
-          ? `http://localhost:5000${product.image_url}`
+          ? `https://extraordinary-embrace-production-5820.up.railway.app${product.image_url}`
           : "https://placehold.co/600x400"
       }
       alt={product.title}
