@@ -57,6 +57,7 @@ const getProducts = async (req, res) => {
       FROM products
       JOIN users
       ON products.seller_id = users.id
+      WHERE products.approved = TRUE
       ORDER BY products.created_at DESC`
     );
 
@@ -64,7 +65,6 @@ const getProducts = async (req, res) => {
       success: true,
       products: products.rows,
     });
-
   } catch (error) {
     console.error(error);
 
@@ -74,7 +74,6 @@ const getProducts = async (req, res) => {
     });
   }
 };
-
 // Get Single Product
 const getProductById = async (req, res) => {
   try {
@@ -194,7 +193,7 @@ const searchProducts = async (req, res) => {
       FROM products
       JOIN users
       ON products.seller_id = users.id
-      WHERE 1=1
+      WHERE products.approved = TRUE
     `;
 
     const values = [];
@@ -220,7 +219,6 @@ const searchProducts = async (req, res) => {
       success: true,
       products: result.rows,
     });
-
   } catch (error) {
     console.error(error);
 
