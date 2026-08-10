@@ -7,10 +7,33 @@ const authMiddleware = require("../middleware/authMiddleware");
 const {
   sendMessage,
   getConversation,
+  getConversations,
 } = require("../controllers/messageController");
 
-router.post("/", authMiddleware, sendMessage);
 
-router.get("/:userId", authMiddleware, getConversation);
+// Send a message
+router.post(
+  "/",
+  authMiddleware,
+  sendMessage
+);
+
+
+// Get conversation list
+// IMPORTANT: this must come BEFORE /:userId
+router.get(
+  "/conversations",
+  authMiddleware,
+  getConversations
+);
+
+
+// Get messages between logged-in user and another user
+router.get(
+  "/:userId",
+  authMiddleware,
+  getConversation
+);
+
 
 module.exports = router;
