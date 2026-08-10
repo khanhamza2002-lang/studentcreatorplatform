@@ -1,5 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import {
+  Search,
+  SlidersHorizontal,
+  ShoppingBag,
+  Sparkles,
+  X,
+} from "lucide-react";
+
 import Navbar from "../components/Navbar";
 import ProductCard from "../components/ProductCard";
 
@@ -17,13 +25,21 @@ function Products() {
     searchParams.get("category") || ""
   );
 
-  // Keep state synchronized when URL changes
+  const categories = [
+    "Software",
+    "Notes",
+    "Fashion",
+    "Photography",
+    "Art & Design",
+    "Handmade Crafts",
+    "Electronics",
+  ];
+
   useEffect(() => {
     setSearch(searchParams.get("search") || "");
     setCategory(searchParams.get("category") || "");
   }, [searchParams]);
 
-  // Load products
   useEffect(() => {
     const fetchProducts = async () => {
       setLoading(true);
@@ -53,141 +69,269 @@ function Products() {
     fetchProducts();
   }, [search, category]);
 
-  // Search box
-  const handleSearchChange = (e) => {
-    const value = e.target.value;
-    setSearch(value);
-
+  const updateParams = (newSearch, newCategory) => {
     const params = {};
 
-    if (value) {
-      params.search = value;
+    if (newSearch) {
+      params.search = newSearch;
     }
 
-    if (category) {
-      params.category = category;
+    if (newCategory) {
+      params.category = newCategory;
     }
 
     setSearchParams(params);
   };
 
-  // Category dropdown
+  const handleSearchChange = (e) => {
+    const value = e.target.value;
+
+    setSearch(value);
+    updateParams(value, category);
+  };
+
   const handleCategoryChange = (e) => {
     const value = e.target.value;
+
     setCategory(value);
+    updateParams(search, value);
+  };
 
-    const params = {};
+  const chooseCategory = (value) => {
+    setCategory(value);
+    updateParams(search, value);
+  };
 
-    if (search) {
-      params.search = search;
-    }
-
-    if (value) {
-      params.category = value;
-    }
-
-    setSearchParams(params);
+  const clearFilters = () => {
+    setSearch("");
+    setCategory("");
+    setSearchParams({});
   };
 
   return (
     <>
       <Navbar />
 
-      <div className="min-h-screen bg-gray-100">
-        <div className="max-w-7xl mx-auto px-8 py-12">
+      <main className="min-h-screen bg-slate-50">
 
-          {/* HEADER */}
-
-          <div className="text-center mb-12">
-            <h1 className="text-5xl font-extrabold text-gray-800">
-              Student Marketplace
-            </h1>
-
-            <p className="text-gray-600 mt-4 text-lg">
-              Browse products created by talented TMUC students.
-            </p>
+        {/* HERO HEADER */}
+        <section className="relative overflow-hidden bg-gradient-to-br from-slate-950 via-blue-950 to-blue-700 text-white">
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-blue-400 blur-3xl"></div>
+            <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-indigo-400 blur-3xl"></div>
           </div>
 
-          {/* SEARCH + FILTER */}
+          <div className="relative max-w-7xl mx-auto px-6 md:px-8 py-20">
+            <div className="max-w-3xl">
 
-          <div className="bg-white rounded-2xl shadow-lg p-6 mb-10">
-            <div className="grid md:grid-cols-2 gap-5">
+              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/15 rounded-full px-4 py-2 text-sm font-semibold mb-5">
+                <Sparkles size={16} />
+                Student Marketplace
+              </div>
 
-              <input
-                type="text"
-                placeholder="🔍 Search products..."
-                value={search}
-                onChange={handleSearchChange}
-                className="border rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
+              <h1 className="text-5xl md:text-6xl font-extrabold tracking-tight leading-tight">
+                Discover student-made
+                <span className="text-blue-300"> products and ideas.</span>
+              </h1>
+
+              <p className="text-slate-200 text-lg mt-6 leading-8 max-w-2xl">
+                Browse approved listings from student creators across software,
+                notes, fashion, design, electronics and more.
+              </p>
+
+            </div>
+          </div>
+        </section>
+
+
+        <div className="max-w-7xl mx-auto px-6 md:px-8 py-10">
+
+          {/* SEARCH / FILTER PANEL */}
+          <section className="-mt-20 relative z-10 bg-white rounded-3xl shadow-xl border border-slate-200 p-6 md:p-7 mb-8">
+
+            <div className="flex items-center gap-2 mb-5">
+              <SlidersHorizontal size={20} className="text-blue-600" />
+
+              <h2 className="font-bold text-slate-800 text-lg">
+                Find what you're looking for
+              </h2>
+            </div>
+
+            <div className="grid lg:grid-cols-[1fr_300px] gap-4">
+
+              <div className="relative">
+                <Search
+                  size={20}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
+                />
+
+                <input
+                  type="text"
+                  value={search}
+                  onChange={handleSearchChange}
+                  placeholder="Search products, notes, software, designs..."
+                  className="w-full border border-slate-200 bg-slate-50 rounded-2xl pl-12 pr-5 py-4 text-slate-700 outline-none transition focus:bg-white focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
+                />
+              </div>
 
               <select
                 value={category}
                 onChange={handleCategoryChange}
-                className="border rounded-xl px-5 py-4 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="border border-slate-200 bg-slate-50 rounded-2xl px-5 py-4 text-slate-700 outline-none transition focus:bg-white focus:border-blue-400 focus:ring-4 focus:ring-blue-100"
               >
                 <option value="">All Categories</option>
-                <option value="Software">Software</option>
-                <option value="Notes">Notes</option>
-                <option value="Fashion">Fashion</option>
-                <option value="Photography">Photography</option>
-                <option value="Art & Design">Art & Design</option>
-                <option value="Handmade Crafts">
-                  Handmade Crafts
-                </option>
-                <option value="Electronics">Electronics</option>
+
+                {categories.map((item) => (
+                  <option key={item} value={item}>
+                    {item}
+                  </option>
+                ))}
               </select>
 
             </div>
-          </div>
 
-          {/* PRODUCT COUNT */}
 
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-800">
-              {category || search
-                ? "Search Results"
-                : "All Products"}
-            </h2>
+            {/* CATEGORY CHIPS */}
+            <div className="flex flex-wrap gap-2 mt-5">
 
-            <span className="bg-blue-600 text-white px-4 py-2 rounded-full">
-              {products.length} Products
-            </span>
-          </div>
+              <button
+                onClick={() => chooseCategory("")}
+                className={`px-4 py-2 rounded-full text-sm font-semibold transition ${
+                  category === ""
+                    ? "bg-blue-600 text-white shadow-md"
+                    : "bg-slate-100 text-slate-600 hover:bg-blue-50 hover:text-blue-700"
+                }`}
+              >
+                All
+              </button>
 
-          {/* PRODUCTS */}
+              {categories.map((item) => (
+                <button
+                  key={item}
+                  onClick={() => chooseCategory(item)}
+                  className={`px-4 py-2 rounded-full text-sm font-semibold transition ${
+                    category === item
+                      ? "bg-blue-600 text-white shadow-md"
+                      : "bg-slate-100 text-slate-600 hover:bg-blue-50 hover:text-blue-700"
+                  }`}
+                >
+                  {item}
+                </button>
+              ))}
 
-          {loading ? (
-            <div className="text-center py-20">
-              <h2 className="text-xl font-semibold text-gray-600">
-                Loading products...
-              </h2>
             </div>
-          ) : products.length === 0 ? (
-            <div className="bg-white rounded-2xl shadow-sm text-center py-20 px-6">
-              <h2 className="text-2xl font-bold text-gray-700">
-                No Products Found
+
+          </section>
+
+
+          {/* RESULT HEADER */}
+          <section className="flex flex-col md:flex-row md:items-end md:justify-between gap-5 mb-8">
+
+            <div>
+              <span className="text-blue-600 font-bold text-sm tracking-wider uppercase">
+                Marketplace
+              </span>
+
+              <h2 className="text-3xl font-extrabold text-slate-900 mt-2">
+
+                {category
+                  ? `${category} Products`
+                  : search
+                  ? "Search Results"
+                  : "Explore All Products"}
+
               </h2>
 
-              <p className="text-gray-500 mt-3">
-                Try another search or category.
+              <p className="text-slate-500 mt-2">
+                {category
+                  ? `Showing approved listings in ${category}.`
+                  : "Discover products created by student sellers."}
               </p>
+            </div>
+
+
+            <div className="flex items-center gap-3">
+
+              <div className="inline-flex items-center gap-2 bg-white border border-slate-200 shadow-sm rounded-full px-4 py-2 text-slate-700 font-semibold">
+                <ShoppingBag size={17} className="text-blue-600" />
+
+                {products.length}
+
+                <span className="text-slate-400 font-medium">
+                  products
+                </span>
+              </div>
+
 
               {(search || category) && (
                 <button
-                  onClick={() => {
-                    setSearch("");
-                    setCategory("");
-                    setSearchParams({});
-                  }}
-                  className="mt-6 bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700"
+                  onClick={clearFilters}
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-slate-500 hover:text-red-600 transition"
                 >
-                  View All Products
+                  <X size={16} />
+                  Clear filters
                 </button>
               )}
+
             </div>
+
+          </section>
+
+
+          {/* CONTENT */}
+          {loading ? (
+
+            <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+              {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+                <div
+                  key={item}
+                  className="bg-white rounded-3xl overflow-hidden border border-slate-200 shadow-sm animate-pulse"
+                >
+                  <div className="h-52 bg-slate-200"></div>
+
+                  <div className="p-5">
+                    <div className="h-4 bg-slate-200 rounded w-2/3 mb-4"></div>
+
+                    <div className="h-3 bg-slate-100 rounded w-full mb-3"></div>
+
+                    <div className="h-3 bg-slate-100 rounded w-1/2"></div>
+                  </div>
+                </div>
+              ))}
+
+            </div>
+
+          ) : products.length === 0 ? (
+
+            <div className="bg-white border border-slate-200 rounded-3xl shadow-sm py-20 px-8 text-center">
+
+              <div className="w-20 h-20 mx-auto rounded-full bg-blue-50 text-blue-600 flex items-center justify-center mb-6">
+                <ShoppingBag size={34} />
+              </div>
+
+              <h2 className="text-2xl font-bold text-slate-800">
+                No products found
+              </h2>
+
+              <p className="text-slate-500 mt-3 max-w-md mx-auto leading-7">
+                We couldn't find any approved products matching your current
+                search or category.
+              </p>
+
+              <button
+                onClick={clearFilters}
+                className="mt-7 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-3 rounded-xl transition"
+              >
+                Browse All Products
+              </button>
+
+            </div>
+
           ) : (
-            <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
+            <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+
               {products.map((product) => (
                 <ProductCard
                   key={product.id}
@@ -200,11 +344,13 @@ function Products() {
                   sold={product.sold}
                 />
               ))}
+
             </div>
+
           )}
 
         </div>
-      </div>
+      </main>
     </>
   );
 }

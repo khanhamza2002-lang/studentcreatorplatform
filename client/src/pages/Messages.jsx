@@ -233,15 +233,7 @@ function Messages() {
   }, [receiverId]);
 
 
-  // ==========================================
-  // AUTO SCROLL
-  // ==========================================
-
-  useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({
-      behavior: "smooth",
-    });
-  }, [messages]);
+  
 
 
   // ==========================================
