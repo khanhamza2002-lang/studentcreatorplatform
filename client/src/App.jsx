@@ -14,6 +14,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Wishlist from "./pages/Wishlist";
 import EditProduct from "./pages/EditProduct";
 import MyOrders from "./pages/MyOrders";
+import Checkout from "./pages/Checkout";
 
 function App() {
   return (
@@ -28,6 +29,14 @@ function App() {
         <Route path="/messages/:sellerId?" element={<Messages />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/wishlist" element={<Wishlist />} />
+        <Route
+  path="/checkout/:id"
+  element={
+    <ProtectedRoute>
+      <Checkout />
+    </ProtectedRoute>
+  }
+/>
         <Route
   path="/my-orders"
   element={

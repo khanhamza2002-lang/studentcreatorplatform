@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   Heart,
   MessageCircle,
@@ -101,52 +101,22 @@ function ProductDetails() {
   // BUY PRODUCT
   // ========================================
 
-  const buyProduct = async () => {
-    const token = localStorage.getItem("token");
+  const buyProduct = () => {
+  const token = localStorage.getItem("token");
 
-    if (!token) {
-      alert("Please login first.");
-      navigate("/login");
-      return;
-    }
+  if (!token) {
+    alert("Please login first.");
+    navigate("/login");
+    return;
+  }
 
-    if (product.sold) {
-      alert("This product has already been sold.");
-      return;
-    }
+  if (product.sold) {
+    alert("This product has already been sold.");
+    return;
+  }
 
-    try {
-      const res = await fetch(
-        `${API_URL}/api/orders`,
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-
-          body: JSON.stringify({
-            product_id: product.id,
-          }),
-        }
-      );
-
-      const data = await res.json();
-
-      if (data.success) {
-        alert("Purchase successful!");
-
-        // Refresh product so SOLD status updates
-        fetchProduct();
-      } else {
-        alert(data.message);
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Server Error");
-    }
-  };
+  navigate(`/checkout/${product.id}`);
+};
 
   // ========================================
   // WISHLIST
